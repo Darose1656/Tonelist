@@ -87,7 +87,7 @@ function visualizeData() {
     const values = trainingData.map((row) => row[firstFeature]);
     const targets = trainingData.map((row) => row[targetFeature]);
 
-    // Histogram
+    
     new Chart(ctx1, {
         type: "bar",
         data: {
@@ -134,14 +134,14 @@ async function trainModel() {
     model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
     model.compile({ optimizer: "sgd", loss: "meanSquaredError", metrics: ["mse"] });
 
-    const xs = tf.tensor(trainingData.map((row) => [row.x])); // x represents my feature
-    const ys = tf.tensor(trainingData.map((row) => row.y)); // y represents my target
+    const xs = tf.tensor(trainingData.map((row) => [row.XFeature]));
+    const ys = tf.tensor(trainingData.map((row) => row.YTarget)); 
 
     await model.fit(xs, ys, { epochs: 50 });
 
     // Evaluate model on test data
-    const testXs = tf.tensor(testData.map((row) => [row.x])); // Replace 'x'
-    const testYs = tf.tensor(testData.map((row) => row.y)); // Replace 'y'
+    const testXs = tf.tensor(testData.map((row) => [row.XFeature]));
+    const testYs = tf.tensor(testData.map((row) => row.YTarget));
 
     const evaluation = model.evaluate(testXs, testYs);
     const mse = await evaluation[0].data();
