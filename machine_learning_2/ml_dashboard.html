@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Dashboard</title>
+</head>
+<body>
+    <h1>Model Performance</h1>
+    
+    <h2>Classification Metrics</h2>
+    <table border="1">
+        <tr>
+            <th>Model</th>
+            <th>Accuracy</th>
+            <th>F1 Score</th>
+        </tr>
+        {% for model, scores in metrics.items() %}
+        <tr>
+            <td>{{ model|title }}</td>
+            <td>{{ "%.2f"|format(scores.accuracy) }}</td>
+            <td>{{ "%.2f"|format(scores.f1) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Clustering Visualization</h2>
+    <img src="data:image/png;base64,{{ cluster_plot }}" alt="Clusters">
+    
+    <h2>Elbow Method</h2>
+    <img src="data:image/png;base64,{{ elbow_plot }}" alt="Elbow Method">
+
+    <h2>Reinforcement Learning Rewards</h2>
+    <div style="width: 800px; height: 400px;">
+        {{ rewards|safe }}
+    </div>
+</body>
+</html>
